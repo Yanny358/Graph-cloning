@@ -233,20 +233,29 @@ public class GraphTask {
          Graph clone = null;
          Vertex originalVertex = null;
          Vertex clonedVertex = null;
-
-         Stack<Vertex> vertexStack = null;
-         Stack<Vertex> vertexStackCopy = null;
+         // Turns out Stack is not optimal for this case
+         // https://stackoverflow.com/questions/12524826/why-should-i-use-deque-over-stack
+         ArrayDeque<Vertex> vertexStack = null;
+         ArrayDeque<Vertex> vertexStackCopy = null;
          Map<String, Vertex> cloneVertexMap = null;
          clone = new Graph(this.id);
          cloneVertexMap = new HashMap<>();
-         vertexStack = new Stack<>();
+         vertexStack = new ArrayDeque<>();
          originalVertex = this.first;
          while (originalVertex != null){  //traverse through all the vertices we have
             vertexStack.push(originalVertex);
             originalVertex = originalVertex.next;
          }
-         vertexStackCopy = new Stack<>(vertexStack);
-
+         vertexStackCopy = new ArrayDeque<>(vertexStack);
+         while (!vertexStackCopy.isEmpty()){
+            Vertex v = null;
+            String s = null;
+            originalVertex = vertexStackCopy.pop();
+            s = originalVertex.id;
+            v = clone.createVertex(s);
+            cloneVertexMap.put(s,v);
+         }
+         vertexStackCopy = new ArrayDeque<>(vertexStack);
       }
    }
 
