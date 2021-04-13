@@ -9,7 +9,6 @@ public class GraphTask {
    public static void main (String[] args) {
       GraphTask a = new GraphTask();
       a.run();
-      throw new RuntimeException ("Nothing implemented yet!"); // delete this
    }
 
    /** Actual main method to run examples and everything. */
@@ -228,6 +227,27 @@ public class GraphTask {
       }
 
       // TODO!!! Your Graph methods here! Probably your solution belongs here.
+
+      @Override
+      public Object clone() throws CloneNotSupportedException{
+         Graph clone = null;
+         Vertex originalVertex = null;
+         Vertex clonedVertex = null;
+
+         Stack<Vertex> vertexStack = null;
+         Stack<Vertex> vertexStackCopy = null;
+         Map<String, Vertex> cloneVertexMap = null;
+         clone = new Graph(this.id);
+         cloneVertexMap = new HashMap<>();
+         vertexStack = new Stack<>();
+         originalVertex = this.first;
+         while (originalVertex != null){  //traverse through all the vertices we have
+            vertexStack.push(originalVertex);
+            originalVertex = originalVertex.next;
+         }
+         vertexStackCopy = new Stack<>(vertexStack);
+
+      }
    }
 
 } 
