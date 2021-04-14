@@ -17,16 +17,45 @@ public class GraphTask {
 
    /** Actual main method to run examples and everything. */
    public void run() throws CloneNotSupportedException {
-      Graph g = new Graph ("G");
-      g.createRandomSimpleGraph (6, 9);
+      Graph g = new Graph ("Graph_1");
+      g.createRandomSimpleGraph (6, 8);
       Graph g2 = null;
       g2 = (Graph) g.clone();
       System.out.println (g);
       System.out.println (g2);
 
+      Graph g3 = new Graph("Graph_2");
+      g3.createRandomSimpleGraph(3,2);
+      Graph g4 = null;
+      g4 = (Graph) g3.clone();
+      System.out.println(g3);
+      System.out.println(g4);
+
+      Graph g5 = new Graph("Graph_3");
+      g5.createRandomSimpleGraph(25,50);
+      Graph g6 = null;
+      g6 = (Graph) g5.clone();
+      System.out.println(g5);
+      System.out.println(g6);
+
+      Graph g7 = new Graph("Graph_4");
+      g7.createRandomSimpleGraph(60,70);
+      Graph g8 = null;
+      g8 = (Graph) g7.clone();
+      System.out.println(g7);
+      System.out.println(g8);
+
+      Graph g9 = new Graph("VERY_BIG_GRAPH");
+      g9.createRandomSimpleGraph(2000,2000);
+      Graph g10 = null;
+      g10 = (Graph) g9.clone();
+      System.out.println(g9);
+      System.out.println(g10);
+
    }
 
-   // TODO!!! add javadoc relevant to your problem
+
+
    class Vertex {
 
       private String id;
@@ -232,8 +261,10 @@ public class GraphTask {
          }
       }
 
-      // TODO!!! Your Graph methods here! Probably your solution belongs here.
-
+      /**
+       * We have  original graph and need to make a deep clone of it.
+       * @return Graph of type object
+       */
       @Override
       public Object clone() throws CloneNotSupportedException{
          Graph clone = null;
@@ -266,14 +297,14 @@ public class GraphTask {
          }
          vertexStackCopy = new ArrayDeque<>(vertexStack);
 
-         while (!vertexStackCopy.isEmpty()){
+         while (!vertexStackCopy.isEmpty()){     // inserting arc copies
             Arc a = null;
             Deque<Arc> arcDeque = new ArrayDeque<>();
             originalVertex = vertexStackCopy.pop();
             a = originalVertex.first;
             clonedVertex = cloneVertexMap.get(originalVertex.id);
 
-            while (a != null){
+            while (a != null){   // inserting arc to deque
                arcDeque.push(a);
                a = a.next;
             }
