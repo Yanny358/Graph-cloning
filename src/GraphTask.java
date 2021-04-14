@@ -8,16 +8,22 @@ public class GraphTask {
    /** Main method. */
    public static void main (String[] args) {
       GraphTask a = new GraphTask();
-      a.run();
+      try {
+         a.run();
+      } catch (Exception e) {
+         throw new RuntimeException("Something went wrong");
+      }
    }
 
    /** Actual main method to run examples and everything. */
-   public void run() {
+   public void run() throws CloneNotSupportedException {
       Graph g = new Graph ("G");
       g.createRandomSimpleGraph (6, 9);
+      Graph g2 = null;
+      g2 = (Graph) g.clone();
       System.out.println (g);
+      System.out.println (g2);
 
-      // TODO!!! Your experiments here
    }
 
    // TODO!!! add javadoc relevant to your problem
@@ -233,6 +239,7 @@ public class GraphTask {
          Graph clone = null;
          Vertex originalVertex = null;
          Vertex clonedVertex = null;
+
          // Turns out Stack is not optimal for this case
          // https://stackoverflow.com/questions/12524826/why-should-i-use-deque-over-stack
          ArrayDeque<Vertex> vertexStack = null;
@@ -246,8 +253,10 @@ public class GraphTask {
             vertexStack.push(originalVertex);
             originalVertex = originalVertex.next;
          }
+
          vertexStackCopy = new ArrayDeque<>(vertexStack);
-         while (!vertexStackCopy.isEmpty()){
+
+         while (!vertexStackCopy.isEmpty()){    // inserting vertex copies
             Vertex v = null;
             String s = null;
             originalVertex = vertexStackCopy.pop();
@@ -256,6 +265,31 @@ public class GraphTask {
             cloneVertexMap.put(s,v);
          }
          vertexStackCopy = new ArrayDeque<>(vertexStack);
+
+         while (!vertexStackCopy.isEmpty()){
+            Arc a = null;
+            Deque<Arc> arcDeque = new ArrayDeque<>();
+            originalVertex = vertexStackCopy.pop();
+            a = originalVertex.first;
+            clonedVertex = cloneVertexMap.get(originalVertex.id);
+
+            while (a != null){
+               arcDeque.push(a);
+               a = a.next;
+            }
+
+            while (!arcDeque.isEmpty()){
+               String arcId = null;
+               Vertex from = null;
+               Vertex to = null;
+               a = arcDeque.pop();
+               arcId = a.id;
+               from = clonedVertex;
+               to = cloneVertexMap.get(a.target.id);
+               clone.createArc(arcId, from, to);
+            }
+         }
+         return clone;
       }
    }
 
