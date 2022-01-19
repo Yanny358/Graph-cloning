@@ -60,18 +60,26 @@ public class GraphTask {
           System.out.println("Are the graphs equal? ---> " + test);
 
           Graph g7 = new Graph("Graph_4");
-          g7.createRandomSimpleGraph(60,70);
+          g7.createRandomSimpleGraph(1,0);
           Graph g8 = null;
           g8 = (Graph) g7.clone();
           System.out.println(g7);
           System.out.println(g8);
+          test = g7.isItEqual(g8);
+          System.out.println("Are the graphs equal? ---> " + test);
+          System.out.println();
 
-          /*Graph g9 = new Graph("VERY_BIG_GRAPH");
+          Graph g9 = new Graph("GRAPH_5");
           g9.createRandomSimpleGraph(2000,2000);
           Graph g10 = null;
+          long stime = System.nanoTime();
           g10 = (Graph) g9.clone();
-          System.out.println(g9);
-          System.out.println(g10);*/
+          long ftime = System.nanoTime();
+          long diff = ftime - stime;
+          test = g9.isItEqual(g10);
+          System.out.println("Graph 5 (2000 vertices, 2000 arcs) clone time test in ms: " + diff / 1000000);
+          System.out.println("Are the graphs equal? ---> " + test);
+
 
     }
 
